@@ -47,7 +47,7 @@ public class MusicEvenHandlerBot extends TelegramLongPollingBot {
                 InlineKeyboardButton loginButton = new InlineKeyboardButton();
                 loginButton.setText("Login with Telegram");
                 //for local test run ngrok and change url here and in telegram.html. And set this url as domain in Telegram
-                loginButton.setUrl("https://dceb-138-199-47-215.ngrok-free.app/auth/telegram");
+                loginButton.setUrl("https://53dd-138-199-47-215.ngrok-free.app/auth/telegram");
 
                 InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
                 markup.setKeyboard(Collections.singletonList(Collections.singletonList(loginButton)));
