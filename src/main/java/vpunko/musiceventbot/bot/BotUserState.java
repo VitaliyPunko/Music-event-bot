@@ -3,7 +3,7 @@ package vpunko.musiceventbot.bot;
 public enum BotUserState {
 
     DEFAULT,
-    LOGIN_REQUESTED,
-    PASSWORD_REQUESTED,
-    AUTHENTICATED
+    START,
+    AUTHENTICATED,
+    WAITING_FOR_ARTIST_NAME
 }

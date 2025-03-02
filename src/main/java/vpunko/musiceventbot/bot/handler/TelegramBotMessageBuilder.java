@@ -6,28 +6,20 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import vpunko.musiceventbot.bot.BotUserState;
-import vpunko.musiceventbot.bot.TelegramAuthService;
 import vpunko.musiceventbot.bot.UserStateManager;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static vpunko.musiceventbot.bot.BotUserState.LOGIN_REQUESTED;
 
 @Service
 @RequiredArgsConstructor
 public class TelegramBotMessageBuilder {
 
     private final UserStateManager userStateManager;
-    private final TelegramAuthService telegramAuthService;
 
     public String handleUserInput(long chatId, String messageText) {
         BotUserState userState = userStateManager.getUserState(chatId);
 
-        if (messageText.equals("/start")) {
-            userStateManager.setUserState(chatId, LOGIN_REQUESTED);
-            return "Please, login via your telegram account";
-        }
         return "";
     }
 

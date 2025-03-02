@@ -8,6 +8,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import vpunko.musiceventbot.bot.client.MusicEventCoreClient;
 import vpunko.musiceventbot.bot.handler.TelegramBotMessageBuilder;
 
 import java.util.List;
@@ -21,13 +22,20 @@ public class MusicEvenHandlerBot extends TelegramLongPollingBot {
     private final String botToken;
     private final TelegramBotMessageBuilder handler;
 
+    private final MusicEventCoreClient musicEventCoreClient;
+    private final UserStateManager userStateManager;
+
     public MusicEvenHandlerBot(
             @Value("${telegram.bot_username}") String botUsername,
             @Value("${telegram.bot_token}") String botToken,
-            TelegramBotMessageBuilder handler) {
+            TelegramBotMessageBuilder handler,
+            MusicEventCoreClient musicEventCoreClient,
+            UserStateManager userStateManager) {
         this.botUsername = botUsername;
         this.botToken = botToken;
         this.handler = handler;
+        this.musicEventCoreClient = musicEventCoreClient;
+        this.userStateManager = userStateManager;
     }
 
     @Override
@@ -38,6 +46,7 @@ public class MusicEvenHandlerBot extends TelegramLongPollingBot {
 
             SendMessage message = new SendMessage();
             message.setChatId(chatId);
+            BotUserState userState = userStateManager.getUserState(chatId);
 
             if (messageText.equals("/start")) {
                 message.setText("Please, login via your telegram account");
@@ -51,6 +60,7 @@ public class MusicEvenHandlerBot extends TelegramLongPollingBot {
                 message.setReplyMarkup(markup);
                 sendMessage(message);
 
+                userStateManager.setUserState(chatId, BotUserState.START);
             } else if (messageText.equals("/next")) {
                 // User was successfully authenticated
                 message.setText("✅ Authentication successful! Now you can get events.");
@@ -61,20 +71,23 @@ public class MusicEvenHandlerBot extends TelegramLongPollingBot {
                         FIND_AN_EVENT_IN_YOUR_CITY
                 );
                 message.setReplyMarkup(keyboardMarkup);
-
                 sendMessage(message);
+
+                userStateManager.setUserState(chatId, BotUserState.AUTHENTICATED);
 
             } else if (messageText.equals(FIND_YOUR_FAVORITE_ARTISTS_EVENT)) {
                 message.setText("Please, enter the name of the artist or band");
                 sendMessage(message);
-                //logic to call music-event-service
+                userStateManager.setUserState(chatId, BotUserState.WAITING_FOR_ARTIST_NAME);
 
             } else if (messageText.equals(FIND_AN_EVENT_IN_YOUR_CITY)) {
 
+            } else if (userState == BotUserState.WAITING_FOR_ARTIST_NAME) {
+                //logic to call music-event-service
+                String userInput = musicEventCoreClient.getMusicEventByArtist("user input");
+                message.setText("Your output is " + userInput);
+                sendMessage(message);
             }
-
-
-
         }
     }
 
