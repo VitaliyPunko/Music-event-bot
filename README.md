@@ -1,5 +1,14 @@
 # Music-event-bot
 
+## To run app locally: 
+- run all services:
+  - music-event-auth
+  - music-event-core
+  - music-event-bot (current)
+- run ngrok (see music-event-auth README.md)
+- change value in [application.yaml](src/main/resources/application.yaml) 
+__*application.music-event-auth-https*__ to new ngrok address
+
 
 ### Telegram Java classes
 
@@ -15,4 +24,3 @@ add an example ?
 - When you want to simplify user input by providing predefined options.
 - For scenarios where the user needs to repeatedly select from a set of options.
 
-add an example ? 
