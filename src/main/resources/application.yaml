@@ -27,3 +27,4 @@ telegram:
 application:
   urls:
     music-event-core: http://localhost:8080
+    music-event-auth-https: https://4d45-84-17-43-243.ngrok-free.app

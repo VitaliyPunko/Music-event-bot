@@ -1,6 +1,7 @@
 package vpunko.musiceventbot.bot.handler;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -16,6 +17,8 @@ import java.util.List;
 public class TelegramBotMessageBuilder {
 
     private final UserStateManager userStateManager;
+    @Value("${application.urls.music-event-auth-https}")
+    private String MUSIC_EVENT_AUTH_HTTP;
 
     public String handleUserInput(long chatId, String messageText) {
         BotUserState userState = userStateManager.getUserState(chatId);
@@ -28,7 +31,7 @@ public class TelegramBotMessageBuilder {
         InlineKeyboardButton loginButton = new InlineKeyboardButton();
         loginButton.setText("Login with Telegram");
         //for local test run ngrok and change url here and in telegram.html. And set this url as domain in Telegram
-        loginButton.setUrl("https://53dd-138-199-47-215.ngrok-free.app/auth/telegram");
+        loginButton.setUrl(MUSIC_EVENT_AUTH_HTTP.concat("/auth/telegram"));
         return loginButton;
     }
 
