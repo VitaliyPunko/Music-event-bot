@@ -94,10 +94,10 @@ public class MusicEvenBot extends TelegramLongPollingBot {
     }
 
     public void sendEventsToUser(long chatId, List<String> events) {
-        for (int i = 0; i < events.size(); i++) {
+        for (String event : events) {
             SendMessage sendMessage = new SendMessage();
             sendMessage.setChatId(String.valueOf(chatId));
-            sendMessage.setText(events.get(i));
+            sendMessage.setText(event);
             sendMessage.setParseMode("HTML"); // Enable HTML formatting
 
             try {
@@ -106,7 +106,6 @@ public class MusicEvenBot extends TelegramLongPollingBot {
                 e.getStackTrace();
             }
         }
-
     }
 
 

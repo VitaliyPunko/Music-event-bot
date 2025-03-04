@@ -11,6 +11,12 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class MusicEventCoreHandler {
+    public static final String A_CLOSE_TAG = "</a>";
+    private static final String b_tag = "<b>";
+    private static final String b_close_tag = "</b>";
+    private static final String LINE_BREAK = "\n";
+    private static final String A_HREF = "<a href=\"";
+    private static final String A_HREF_CLOSE = "\">";
 
     private final MusicEventCoreClient musicEventCoreClient;
 
@@ -39,27 +45,31 @@ public class MusicEventCoreHandler {
 
     private String formatEvent(MusicEventDto event) {
         StringBuilder sb = new StringBuilder();
-        sb.append("🎤 ").append("<b>Event Name</b>: ").append(event.getName()).append("\n");
-        sb.append("📅 ").append("<b>Date</b>: ")
-                .append(event.getStartTime().toString()).append(event.getTimeZone()).append("\n");
-        sb.append("💰 ").append("<b>Price</b>: ")
-                .append(event.getPrice() != null ? event.getPrice() + " (" + event.getCurrency() + ")" : "unknown").append("\n");
-        sb.append("🎟️ ").append("<b>Ticket Status</b>: ").append(event.getTicketSaleStatus()).append("\n");
+
+        sb.append("🎤 ").append(b_tag).append("Event Name").append(b_close_tag).append(": ").append(event.getName()).append(LINE_BREAK);
+        sb.append("📅 ").append(b_tag).append("Date").append(b_close_tag).append(": ")
+                .append(event.getStartTime().toString()).append(event.getTimeZone()).append(LINE_BREAK);
+        sb.append("💰 ").append(b_tag).append("Price").append(b_close_tag).append(": ")
+                .append(event.getPrice() != null ? event.getPrice() + " (" + event.getCurrency() + ")" : "unknown").append(LINE_BREAK);
+        sb.append("🎟️ ").append(b_tag).append("Ticket Status").append(b_close_tag).append(": ").append(event.getTicketSaleStatus()).append(LINE_BREAK);
 
         if (event.getVenue() != null) {
-            sb.append("📍 ").append("<b>Venue</b>: ").append(event.getVenue().getName()).append(", ")
+            sb.append("📍 ").append(b_tag).append("Venue").append(b_close_tag).append(": ").append(event.getVenue().getName()).append(", ")
                     .append(event.getVenue().getCity()).append(", ")
-                    .append(event.getVenue().getCountry()).append("\n");
-            sb.append("📌 ").append("<b>Address</b>: ").append(event.getVenue().getAddress()).append("\n");
-            sb.append("🔗 ").append("<b>Venue URL</b>: ").append("[Click here](").append(event.getVenue().getUrl()).append(")\n");
+                    .append(event.getVenue().getCountry()).append(LINE_BREAK);
+            sb.append("📌 ").append(b_tag).append("Address").append(b_close_tag).append(": ").append(event.getVenue().getAddress()).append(LINE_BREAK);
+            //  sb.append("🔗 ").append(b_tag).append("Venue URL").append(b_close_tag).append(": ").append("[Click here](").append(event.getVenue().getUrl()).append(")\n");
+            sb.append("🔗 ").append(b_tag).append("Venue URL").append(b_close_tag).append(": ").append(A_HREF).append(event.getVenue().getUrl()).append(A_HREF_CLOSE)
+                    .append("[Click here]").append(A_CLOSE_TAG).append(LINE_BREAK);
         }
 
         if (event.getImageUrl() != null) {
-            sb.append("📷 <b>Image</b>:").append("<a href=\"").append(event.getImageUrl()).append("\"> [View Image]").append("</a>").append("\n");
+            sb.append("📷 " + b_tag + "Image" + b_close_tag + ":").append(A_HREF).append(event.getImageUrl()).append(A_HREF_CLOSE)
+                    .append(" [View Image]").append(A_CLOSE_TAG).append(LINE_BREAK);
         }
 
         if (event.getDescription() != null) {
-            sb.append("📝 <b>Description</b>: ").append(event.getDescription()).append("\n");
+            sb.append("📝 " + b_tag + "Description" + b_close_tag + ": ").append(event.getDescription()).append(LINE_BREAK);
         }
 
         return sb.toString();
