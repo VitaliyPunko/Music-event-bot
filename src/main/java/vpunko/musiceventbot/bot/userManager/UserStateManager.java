@@ -1,6 +1,7 @@
-package vpunko.musiceventbot.bot;
+package vpunko.musiceventbot.bot.userManager;
 
 import org.springframework.stereotype.Component;
+import vpunko.musiceventbot.bot.BotUserState;
 
 import java.util.HashMap;
 import java.util.Map;

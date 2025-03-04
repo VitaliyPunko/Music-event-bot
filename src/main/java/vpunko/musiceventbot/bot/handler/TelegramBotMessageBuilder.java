@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import vpunko.musiceventbot.bot.BotUserState;
-import vpunko.musiceventbot.bot.UserStateManager;
+import vpunko.musiceventbot.bot.userManager.UserStateManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +33,13 @@ public class TelegramBotMessageBuilder {
         //for local test run ngrok and change url here and in telegram.html. And set this url as domain in Telegram
         loginButton.setUrl(MUSIC_EVENT_AUTH_HTTP.concat("/auth/telegram"));
         return loginButton;
+    }
+
+    public InlineKeyboardButton startButton() {
+        InlineKeyboardButton startButton = new InlineKeyboardButton();
+        startButton.setText("Start"); // Text shown on the button
+        startButton.setCallbackData("/start"); // Data sent when the button is clicked
+        return startButton;
     }
 
     public ReplyKeyboardMarkup getReplyKeyboardMarkup(String ... linesName) {
