@@ -1,5 +1,7 @@
 # Music-event-bot
 
+[![Java CI with Gradle](https://github.com/VitaliyPunko/Music-event-bot/actions/workflows/gradle.yml/badge.svg)](https://github.com/VitaliyPunko/Music-event-bot/actions/workflows/gradle.yml)
+
 ## To run app locally: 
 - run all services:
   - music-event-auth
