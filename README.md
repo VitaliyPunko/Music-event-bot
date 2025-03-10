@@ -10,14 +10,24 @@
 __*application.music-event-auth-https*__ to new ngrok address
 
 
+This application use **telegram** authentication for user authentication. 
+And **client-credentials** flow for server interactions.
+
+<p>You can take a look at the diagrams below:
+<p>How the application works
+
+![Application interactions](app-interaction.png)
+
+<p>Client-credentials flow
+
+![Client-credentials flow](client-credentials.png)
+
 ### Telegram Java classes
 
 #### InlineKeyboardMarkup:
 - When you want buttons to appear within a specific message.
 - When you need to handle button clicks without sending a visible message to the chat.
 - For interactive features like voting, pagination, or navigation.
-
-add an example ? 
 
 #### ReplyKeyboardMarkup
 - When you want a persistent keyboard for quick replies.
