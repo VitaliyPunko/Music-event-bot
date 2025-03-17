@@ -26,11 +26,7 @@ public class RestClientConfig {
                 .messageConverters(ms -> ms.add(getMappingJackson2HttpMessageConverter()));
     }
 
-    /**
-     * as Telegram bots receive updates via a webhook or long-polling mechanism,
-     * but the bot itself does not handle incoming HTTP requests directly
-     * use AuthorizedClientServiceOAuth2AuthorizedClientManager
-     */
+
     @Bean
     public OAuth2AuthorizedClientManager authorizedClientManager(
             ClientRegistrationRepository clientRegistrationRepository,

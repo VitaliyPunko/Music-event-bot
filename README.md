@@ -10,6 +10,7 @@
 - run ngrok (see music-event-auth README.md)
 - change value in [application.yaml](src/main/resources/application.yaml) 
 __*application.music-event-auth-https*__ to new ngrok address
+- set new bot domain in BotFather
 
 
 This application use **telegram** authentication for user authentication. 

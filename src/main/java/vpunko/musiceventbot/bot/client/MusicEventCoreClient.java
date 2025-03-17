@@ -55,15 +55,4 @@ public class MusicEventCoreClient {
         return  Arrays.asList(body);
     }
 
-//    public MusicEventDto getMusicEventByArtist(String artist) {
-//        MusicEventDto body = restClient.get()
-//                .uri(uriBuilder -> uriBuilder.path("/getEventByArtist")
-//                        .queryParam("artist", artist).build()
-//                )
-//                .attributes(clientRegistrationId("music-event-bot"))
-//                //  .header("Authorization", "Bearer " + accessToken)  interceptor past the token
-//                .retrieve()
-//                .body(MusicEventDto.class);
-//        return body;
-//    }
 }
