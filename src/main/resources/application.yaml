@@ -16,6 +16,9 @@ spring:
           music-event-auth:
             token-uri: http://localhost:9000/oauth2/token
             authorization-uri: http://localhost:9000/oauth2/authorize
+  kafka:
+    bootstrap-servers: localhost:29092
+
 
 server:
   port: 9090
