@@ -16,7 +16,7 @@ public class KafkaController {
     @GetMapping("/send/{message}")
     public String sendMessage(@PathVariable String message) {
         User user = new User(message);
-        kafkaSender.sendMessage(user, "topic");
+        kafkaSender.sendMessage(user);
         return message;
     }
 }
