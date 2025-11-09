@@ -4,7 +4,7 @@ spring:
       client:
         registration:
           music-event-bot: #use vault
-            client-id: music-event-bot
+            client-id: test
             client-secret: bot-secret
             authorization-grant-type: client_credentials
             client-authentication-method: client_secret_post
@@ -23,10 +23,10 @@ spring:
 
 
 telegram:
-  bot_username: MusicEvenHelperBot    #use vault
-  bot_token: 7941376949:AAHeus8Bg2E0aydGgWJEvtdOE1S3col-H1M   #use vault
+  bot_username: test
+  bot_token: 1111
 
 application:
   urls:
     music-event-core: http://localhost:8080
-    music-event-auth-https: https://6077-138-199-47-208.ngrok-free.app
+    music-event-auth-https: https://test
