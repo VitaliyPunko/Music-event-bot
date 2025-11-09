@@ -40,7 +40,7 @@ jobs:
 
   docker:
     name: Build and Push Docker Image
-    needs: build-and-test  # Only runs if test job succeeds
+    needs: build-and-test  # Only runs if a test job succeeds
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
