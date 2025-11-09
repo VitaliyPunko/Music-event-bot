@@ -18,10 +18,10 @@ spring:
             authorization-uri: http://localhost:9000/oauth2/authorize
   kafka:
     out:
-      telegram-bot-user-received-event:
-        topic: telegram-bot-user-received-event
+      music-core-event:
+        topic: music-event-core-topic
         producer:
-          bootstrap-servers: localhost:29092
+          bootstrap-servers: kafka-kafka-bootstrap.kafka-namespace.svc.cluster.local:29092
 
 
 server:

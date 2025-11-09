@@ -19,7 +19,7 @@ import java.util.Map;
 @Configuration
 public class KafkaProducerConfig {
 
-    @Value("${spring.kafka.out.telegram-bot-user-received-event.producer.bootstrap-servers}")
+    @Value("${spring.kafka.out.music-core-event.producer.bootstrap-servers}")
     private String bootstrapServer;
 
     @Bean

@@ -1,4 +1,4 @@
-package vpunko.musiceventbot.bot.service;
+package vpunko.musiceventbot.bot.publisher;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,13 +9,13 @@ import vpunko.musiceventbot.bot.dto.User;
 
 @Slf4j
 @Component
-public class KafkaSender {
+public class MusicCoreKafkaPublisher {
 
     private final String topicName;
     private final KafkaTemplate<String, User> kafkaTemplate;
 
-    public KafkaSender(KafkaTemplate<String, User> kafkaTemplate,
-                       @Value("${spring.kafka.out.telegram-bot-user-received-event.topic}") String topicName) {
+    public MusicCoreKafkaPublisher(KafkaTemplate<String, User> kafkaTemplate,
+                                   @Value("${spring.kafka.out.music-core-event.topic}") String topicName) {
         this.kafkaTemplate = kafkaTemplate;
         this.topicName = topicName;
     }
