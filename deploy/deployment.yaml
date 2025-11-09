@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: music-event-bot
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: music-event-bot
+  template:
+    metadata:
+      labels:
+        app: music-event-bot
+    spec:
+      containers:
+        - name: music-event-bot
+          image: vitaliypunko/music-event-bot:latest
+          ports:
+            - containerPort: 8080
+          env:
+            # app env
+            - name: SPRING_PROFILES_ACTIVE
+              value: "test"
+
+            # configMap (name should match the name in app.yaml ${telegram-bot-username})
+            - name: TELEGRAM-BOT-USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: music-event-core-config-map
+                  key: telegram-bot-username
+            - name: MUSIC-EVENT-BOT-CLIENT-ID
+              valueFrom:
+                configMapKeyRef:
+                  name: music-event-bot-config-map
+                  key: music-event-bot-client-id
+            #            - name: MUSIC-EVENT-AUTH-URL
+            #              valueFrom:
+            #                configMapKeyRef:
+            #                  name: music-event-core-config-map
+            #                  key: music-event-auth-url
+
+            # secrets from music-event-core-secrets
+            - name: TELEGRAM-BOT-TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: music-event-core-secrets
+                  key: telegram-bot-token
+
+          resources:
+            limits:
+              cpu: "0.3"
+              memory: "300Mi"
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 3
+            failureThreshold: 2
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 40
+            periodSeconds: 10
+            failureThreshold: 3
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: music-event-bot-service
+spec:
+  selector:
+    app: music-event-bot
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
