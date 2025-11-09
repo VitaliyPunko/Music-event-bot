@@ -23,12 +23,12 @@ public class MusicEventCoreClient {
 
     public MusicEventCoreClient(
             RestClient.Builder restClient,
-            @Value("${application.urls.music-event-core}") String spotifyBaseUrl,
+            @Value("${application.urls.music-event-core}") String musicEventCoreBaseUrl,
             @Value("${spring.security.oauth2.client.registration.music-event-bot.client-id}") String clientId
     ) {
         this.clientId = clientId;
         this.restClient = restClient
-                .baseUrl(spotifyBaseUrl)
+                .baseUrl(musicEventCoreBaseUrl)
                 .build();
     }
 
