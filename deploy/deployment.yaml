@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: music-event-bot
-          image: vitaliypunko/music-event-bot:0.0.2-5f2f6a8
+          image: vitaliypunko/music-event-bot:0.0.2-1adf1ed
           ports:
             - containerPort: 8080
           env:
@@ -54,14 +54,14 @@ spec:
             httpGet:
               path: /actuator/health/readiness
               port: 8080
-            initialDelaySeconds: 10
+            initialDelaySeconds: 30
             periodSeconds: 3
             failureThreshold: 2
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
               port: 8080
-            initialDelaySeconds: 40
+            initialDelaySeconds: 60
             periodSeconds: 10
             failureThreshold: 3
 
