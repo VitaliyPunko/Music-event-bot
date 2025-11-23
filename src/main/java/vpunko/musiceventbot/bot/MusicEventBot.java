@@ -147,7 +147,7 @@ public class MusicEventBot extends TelegramWebhookBot {
 
     @Override
     public String getBotPath() {
-        return "";
+        return "webhook";
     }
 
 //    @Override
