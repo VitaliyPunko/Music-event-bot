@@ -21,6 +21,8 @@ spring:
         producer:
           bootstrap-servers: localhost:29092
 
+server:
+  port: 9090
 
 telegram:
   bot_username: MusicEvenHelperBot    #use vault

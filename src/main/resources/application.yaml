@@ -6,8 +6,6 @@ spring:
       telegram-bot-user-received-event:
         topic: telegram-bot-user-received-event
 
-server:
-  port: 9090
 
 telegram:
   webhookUrl: "https://music-event-bot.duckdns.org"
