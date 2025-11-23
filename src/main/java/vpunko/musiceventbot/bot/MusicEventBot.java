@@ -58,6 +58,8 @@ public class MusicEventBot extends TelegramWebhookBot {
 
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
+        log.info("🎯 Webhook update was called!");
+
         if (update.hasMessage() && update.getMessage().hasText() || update.hasCallbackQuery()) {
             String messageText;
             long chatId;
