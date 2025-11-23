@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: music-event-bot
-          image: vitaliypunko/music-event-bot:0.0.2-b59b203
+          image: vitaliypunko/music-event-bot:0.0.2-6809e3d
           ports:
             - containerPort: 8080
           env:
@@ -47,6 +47,9 @@ spec:
                   key: telegram-bot-token
 
           resources:
+            requests:
+              cpu: "0.1"
+              memory: "128Mi"
             limits:
               cpu: "0.3"
               memory: "300Mi"
