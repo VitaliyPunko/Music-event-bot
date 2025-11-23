@@ -3,18 +3,22 @@ kind: Ingress
 metadata:
   name: music-event-bot-ingress
   annotations:
-    nginx.ingress.kubernetes.io/use-regex: "true"
-    #    - /$2 means “replace the upstream request path with the content
-    #   of the second capture group from the regex in path.”
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    cert-manager.io/cluster-issuer: letsencrypt-test
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   ingressClassName: nginx
+
+  tls:
+    - hosts:
+        - music-event-bot.duckdns.org
+      secretName: music-event-bot-tls
+
   rules:
-    - host: 66-228-63-42.ip.linodeusercontent.com
-    - http:
+    - host: music-event-bot.duckdns.org
+      http:
         paths:
-          - path: /music-event-bot(/|$)(.*)
-            pathType: ImplementationSpecific
+          - path: /webhook
+            pathType: Prefix
             backend:
               service:
                 name: music-event-bot-service
