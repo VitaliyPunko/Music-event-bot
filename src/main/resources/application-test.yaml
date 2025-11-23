@@ -29,7 +29,7 @@ server:
 
 telegram:
   bot_username: MusicEvenHelperBot    #use vault
-  bot_token: 7941376949:AAHeus8Bg2E0aydGgWJEvtdOE1S3col-H1M   #use vault
+  bot_token: 8223652018:AAERw1pr6gp1ny-SSCO81WMbCvGB6_lV37c   #use vault
 
 application:
   urls:
