@@ -14,8 +14,8 @@ spring:
             provider: music-event-auth
         provider:
           music-event-auth:
-            token-uri: http://localhost:9000/oauth2/token
-            authorization-uri: http://localhost:9000/oauth2/authorize
+            token-uri: https://music-event-bot.duckdns.org/oauth2/token
+            authorization-uri: https://music-event-bot.duckdns.org/oauth2/authorize
   kafka:
     out:
       music-core-event:
@@ -29,5 +29,5 @@ server:
 
 application:
   urls:
-    music-event-core: http://localhost:8080
-    music-event-auth-https: https://6077-138-199-47-208.ngrok-free.app
+    music-event-core: https://music-event-bot.duckdns.org
+    music-event-auth-https: https://music-event-bot.duckdns.org

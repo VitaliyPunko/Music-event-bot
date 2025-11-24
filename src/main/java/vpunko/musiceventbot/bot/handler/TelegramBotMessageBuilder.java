@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
-import vpunko.musiceventbot.bot.userManager.UserStateManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TelegramBotMessageBuilder {
 
-    private final UserStateManager userStateManager;
     @Value("${application.urls.music-event-auth-https}")
     private String MUSIC_EVENT_AUTH_HTTP;
 
