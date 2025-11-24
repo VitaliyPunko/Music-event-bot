@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: music-event-bot
-          image: vitaliypunko/music-event-bot:0.0.2-a95f147
+          image: vitaliypunko/music-event-bot:0.0.2-ffa038f
           ports:
             - containerPort: 8080
           env:
@@ -22,29 +22,22 @@ spec:
             - name: SPRING_PROFILES_ACTIVE
               value: "test"
 
-            # configMap (name should match the name in app.yaml ${telegram-bot-username})
-            - name: TELEGRAM-BOT-USERNAME
+            # configMap
+            - name: TELEGRAM_BOT_USERNAME
               valueFrom:
-                configMapKeyRef:
-                  name: music-event-core-config-map
-                  key: telegram-bot-username
-            - name: MUSIC-EVENT-BOT-CLIENT-ID
+                secretKeyRef:
+                  name: telegram-bot-credentials
+                  key: bot-username
+            - name: TELEGRAM_BOT_TOKEN
               valueFrom:
-                configMapKeyRef:
-                  name: music-event-bot-config-map
-                  key: music-event-bot-client-id
+                secretKeyRef:
+                  name: telegram-bot-credentials
+                  key: bot-token
             #            - name: MUSIC-EVENT-AUTH-URL
             #              valueFrom:
             #                configMapKeyRef:
             #                  name: music-event-core-config-map
             #                  key: music-event-auth-url
-
-            # secrets from music-event-core-secrets
-            - name: TELEGRAM-BOT-TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: music-event-core-secrets
-                  key: telegram-bot-token
 
           resources:
             requests:

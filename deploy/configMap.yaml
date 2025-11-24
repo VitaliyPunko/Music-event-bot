@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: music-event-bot-config-map
-data:
-  music-event-bot-client-id: "music-event-bot"
