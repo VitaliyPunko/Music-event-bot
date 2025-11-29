@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: music-event-bot-ingress
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-test
+    cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   ingressClassName: nginx
@@ -12,12 +12,18 @@ spec:
     - hosts:
         - music-event-bot.duckdns.org
       secretName: music-event-bot-tls
-
   rules:
     - host: music-event-bot.duckdns.org
       http:
         paths:
           - path: /webhook
+            pathType: Prefix
+            backend:
+              service:
+                name: music-event-bot-service
+                port:
+                  number: 80
+          - path: /send
             pathType: Prefix
             backend:
               service:
