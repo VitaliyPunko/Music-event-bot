@@ -11,7 +11,7 @@ import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
-import vpunko.musiceventbot.bot.dto.User;
+import vpunko.musiceventbot.bot.dto.UserMessageRequestEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,11 +21,14 @@ public class KafkaProducerConfig {
 
     @Value("${spring.kafka.out.music-core-event.producer.bootstrap-servers}")
     private String bootstrapServer;
+    @Value("${spring.kafka.out.music-core-event.producer.client-id}")
+    private String clientId;
 
     @Bean
-    public ProducerFactory<String, User> producerFactory() {
+    public ProducerFactory<String, UserMessageRequestEvent> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
+        configProps.put(ProducerConfig.CLIENT_ID_CONFIG, clientId);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         configProps.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, false);
@@ -33,7 +36,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, User> kafkaTemplate() {
+    public KafkaTemplate<String, UserMessageRequestEvent> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 

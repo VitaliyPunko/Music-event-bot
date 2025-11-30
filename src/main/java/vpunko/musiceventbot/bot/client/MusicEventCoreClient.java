@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
-import vpunko.musiceventbot.bot.dto.MusicEventDto;
+import vpunko.musiceventbot.bot.dto.TicketmasterEvent;
 import vpunko.musiceventbot.bot.exception.MusicEventCoreException;
 
 import java.util.ArrayList;
@@ -32,8 +32,8 @@ public class MusicEventCoreClient {
                 .build();
     }
 
-    public List<MusicEventDto> getMusicEventByArtist(String artist) {
-        MusicEventDto[] body = restClient.get()
+    public List<TicketmasterEvent> getMusicEventByArtist(String artist) {
+        TicketmasterEvent[] body = restClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/getEventByArtist")
                         .queryParam("artist", artist).build()
                 )
@@ -46,7 +46,7 @@ public class MusicEventCoreClient {
                             response.getBody().toString()
                     );
                 })
-                .body(MusicEventDto[].class);
+                .body(TicketmasterEvent[].class);
 
         if (body == null || body.length == 0) {
             log.error("MusicEvenCore API getMusicEventByArtist return null body");

@@ -22,6 +22,13 @@ spring:
         topic: music-event-core-topic
         producer:
           bootstrap-servers: kafka-kafka-bootstrap.kafka-namespace.svc.cluster.local:29092
+          client-id: music-event-core-producer
+    in:
+      ticket-master-response-event:
+        topic: ticket-master-response-topic
+        consumer:
+          bootstrap-servers: kafka-kafka-bootstrap.kafka-namespace.svc.cluster.local:29092
+          group-id: ticket-master-response-group-id
 
 
 server:

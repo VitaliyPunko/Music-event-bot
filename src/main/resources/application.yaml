@@ -13,6 +13,18 @@ telegram:
   bot_token: ${TELEGRAM_BOT_TOKEN}
 
 management:
+  info:
+    env:
+      enabled: true
+    build:
+      enabled: true
+  metrics:
+    enable:
+      kafka: true
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus,metrics,info
   endpoint:
     health:
       probes:
@@ -22,3 +34,15 @@ management:
       enabled: true
     readinessState:
       enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          client:
+            RestTemplate=DEBUG:

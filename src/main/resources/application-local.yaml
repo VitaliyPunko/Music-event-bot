@@ -20,6 +20,13 @@ spring:
         topic: music-event-core-topic
         producer:
           bootstrap-servers: localhost:29092
+          client-id: music-event-core-producer
+    in:
+      ticket-master-response-event:
+        topic: ticket-master-response-topic
+        consumer:
+          bootstrap-servers: localhost:29092
+          group-id: group_id
 
 server:
   port: 9090
