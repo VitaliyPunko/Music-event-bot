@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: music-event-bot
-          image: vitaliypunko/music-event-bot:0.0.2-b732d31
+          image: vitaliypunko/music-event-bot:0.0.2-a41f61c
           ports:
             - containerPort: 8080
           env:

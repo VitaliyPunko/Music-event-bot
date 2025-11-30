@@ -1,16 +1,6 @@
 spring:
   application:
     name: Music-event-bot
-  kafka:
-    out:
-      telegram-bot-user-received-event:
-        topic: telegram-bot-user-received-event
-
-
-telegram:
-  webhookUrl: "https://music-event-bot.duckdns.org"
-  bot_username: ${TELEGRAM_BOT_USERNAME}
-  bot_token: ${TELEGRAM_BOT_TOKEN}
 
 management:
   info:

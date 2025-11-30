@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class UserMessageRequestEvent {
 
     long chatId;
-    String msg;
+    String message;
 }
