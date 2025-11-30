@@ -11,6 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import vpunko.musiceventbot.bot.dto.TicketmasterEvent;
 import vpunko.musiceventbot.bot.exception.TelegramMessageSendException;
 import vpunko.musiceventbot.bot.handler.MusicEventCoreHandler;
 import vpunko.musiceventbot.bot.handler.TelegramBotMessageBuilder;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import static vpunko.musiceventbot.bot.BotUserState.INCORRECT_ARTIST_NAME;
+import static vpunko.musiceventbot.bot.BotUserState.WAITING_ARTIST_EVENTS;
 
 @Slf4j
 @Service
@@ -119,9 +121,21 @@ public class MusicEventBot extends TelegramWebhookBot {
 
             } else if (userState == BotUserState.WAITING_FOR_ARTIST_NAME) {
                 //logic to call music-event-service
-                handleArtistNameInput(messageText, message, chatId);
+                boolean kafka = true;
+                if (kafka) {
+                    findArtistEvent(messageText, chatId);
+                } else {
+                    handleArtistNameInput(messageText, message, chatId);
+                }
+
             } else if (userState == BotUserState.INCORRECT_ARTIST_NAME) {
-                handleArtistNameInput(messageText, message, chatId);
+                boolean kafka = true;
+                if (kafka) {
+                    findArtistEvent(messageText, chatId);
+                } else {
+                    handleArtistNameInput(messageText, message, chatId);
+                }
+
             } else if (userState == BotUserState.GET_EVENT) {
 
                 if (messageText.equals(TRY_TO_FIND_ANOTHER_ARTISTS_EVENT)) {
@@ -239,9 +253,38 @@ public class MusicEventBot extends TelegramWebhookBot {
 //        }
 //    }
 
+    private void findArtistEvent(String artistName, long chatId) {
+        coreHandler.sendArtistName(artistName, chatId);
+        userStateManager.setUserState(chatId, WAITING_ARTIST_EVENTS);
+    }
+
+    public void handleKafkaArtistNameInput(SendMessage message, long chatId,
+                                           List<TicketmasterEvent> musicEventByArtist) {
+        List<String> eventByArtist = coreHandler.getMusicEventByArtistViaKafka(musicEventByArtist);
+
+        if (eventByArtist.isEmpty()) {
+            userStateManager.setUserState(chatId, INCORRECT_ARTIST_NAME);
+            message.setText("Couldn't find any event. Please, check your spelling and enter the name again");
+            sendMessage(message);
+        } else {
+            sendEventsToUser(chatId, eventByArtist);
+            userStateManager.setUserState(chatId, BotUserState.GET_EVENT);
+
+            // Add two buttons for the next option
+            ReplyKeyboardMarkup keyboardMarkup = botMessageBuilder.getReplyKeyboardMarkup(
+                    TRY_TO_FIND_ANOTHER_ARTISTS_EVENT,
+                    FINISH
+            );
+            message.setReplyMarkup(keyboardMarkup);
+            message.setText("You can see info about the events above. Please choose from the following options");
+            sendMessage(message);
+        }
+    }
+
+
     private void handleArtistNameInput(String artistName, SendMessage message, long chatId) {
         //logic to call music-event-service
-        List<String> eventByArtist = coreHandler.getMusicEventByArtist(artistName);
+        List<String> eventByArtist = coreHandler.getMusicEventByArtistViaClient(artistName);
 
         if (eventByArtist.isEmpty()) {
             userStateManager.setUserState(chatId, INCORRECT_ARTIST_NAME);

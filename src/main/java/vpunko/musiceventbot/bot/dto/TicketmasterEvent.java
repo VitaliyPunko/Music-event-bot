@@ -6,7 +6,7 @@ import vpunko.musiceventbot.bot.constant.TicketSaleEnum;
 import java.time.OffsetDateTime;
 
 @Data
-public class MusicEventDto {
+public class TicketmasterEvent {
 
     /**
      * Event name

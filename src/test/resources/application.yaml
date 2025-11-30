@@ -17,9 +17,16 @@ spring:
   kafka:
     out:
       music-core-event:
-        topic: test
+        topic: music-event-core-topic
         producer:
           bootstrap-servers: localhost:29092
+          client-id: test-producer
+    in:
+      ticket-master-response-event:
+        topic: ticket-master-response-topic
+        consumer:
+          bootstrap-servers: localhost:29092
+          group-id: test-group-id
 
 
 telegram:

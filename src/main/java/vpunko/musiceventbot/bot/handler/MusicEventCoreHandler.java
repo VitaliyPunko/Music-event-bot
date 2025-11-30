@@ -1,16 +1,21 @@
 package vpunko.musiceventbot.bot.handler;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import vpunko.musiceventbot.bot.client.MusicEventCoreClient;
-import vpunko.musiceventbot.bot.dto.MusicEventDto;
+import vpunko.musiceventbot.bot.dto.TicketmasterEvent;
+import vpunko.musiceventbot.bot.dto.UserMessageRequestEvent;
+import vpunko.musiceventbot.bot.publisher.UserMessageRequestBotEventKafkaPublisher;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MusicEventCoreHandler {
+
     public static final String A_CLOSE_TAG = "</a>";
     private static final String b_tag = "<b>";
     private static final String b_close_tag = "</b>";
@@ -18,15 +23,30 @@ public class MusicEventCoreHandler {
     private static final String A_HREF = "<a href=\"";
     private static final String A_HREF_CLOSE = "\">";
 
+
+    private final UserMessageRequestBotEventKafkaPublisher publisher;
     private final MusicEventCoreClient musicEventCoreClient;
 
-    public List<String> getMusicEventByArtist(String artist) {
-        List<MusicEventDto> musicEventByArtist = musicEventCoreClient.getMusicEventByArtist(artist);
 
+    public void sendArtistName(String artist, long chatId) {
+        log.info("Sending artist name to music-core: {}", artist);
+        publisher.sendMessage(new UserMessageRequestEvent(chatId, artist), chatId);
+    }
+
+
+    public List<String> getMusicEventByArtistViaKafka(List<TicketmasterEvent> musicEventByArtist) {
         return formatEvents(musicEventByArtist);
     }
 
-    private List<String> formatEvents(List<MusicEventDto> events) {
+
+    public List<String> getMusicEventByArtistViaClient(String artist) {
+        log.info("Getting events by artist: {}", artist);
+        List<TicketmasterEvent> musicEventByArtist = musicEventCoreClient.getMusicEventByArtist(artist);
+        return formatEvents(musicEventByArtist);
+    }
+
+
+    private List<String> formatEvents(List<TicketmasterEvent> events) {
         List<String> messages = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
 
@@ -43,7 +63,7 @@ public class MusicEventCoreHandler {
         return messages;
     }
 
-    private String formatEvent(MusicEventDto event) {
+    private String formatEvent(TicketmasterEvent event) {
         StringBuilder sb = new StringBuilder();
 
         sb.append("🎤 ").append(b_tag).append("Event Name").append(b_close_tag).append(": ").append(event.getName()).append(LINE_BREAK);
