@@ -34,6 +34,11 @@ spring:
 server:
   port: 8080
 
+telegram:
+  webhookUrl: "https://music-event-bot.duckdns.org"
+  bot_username: ${TELEGRAM_BOT_USERNAME}
+  bot_token: ${TELEGRAM_BOT_TOKEN}
+
 application:
   urls:
     music-event-core: https://music-event-bot.duckdns.org
