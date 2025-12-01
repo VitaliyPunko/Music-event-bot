@@ -20,14 +20,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @EmbeddedKafka(
         partitions = 1,
-        topics = "music-event-core-topic"
+        topics = "music-event-core-topic-test"
 )
 @TestPropertySource(properties = {
-        "spring.kafka.out.music-core-event.producer.bootstrap-servers=${spring.embedded.kafka.brokers}",
+        "spring.kafka.out.music-core-event.producer.bootstrap-servers=${spring.embedded.kafka.brokers}"
 })
 class UserMessageRequestBotEventKafkaPublisherIT {
 
-    private static final String TOPIC = "music-event-core-topic";
+    private static final String TOPIC = "music-event-core-topic-test";
 
     @Autowired
     private UserMessageRequestBotEventKafkaPublisher publisher;
@@ -45,7 +45,7 @@ class UserMessageRequestBotEventKafkaPublisherIT {
                 );
 
         long chatId = 123456L;
-        UserMessageRequestEvent event = new UserMessageRequestEvent(chatId, "test message");
+        UserMessageRequestEvent event = new UserMessageRequestEvent(chatId, "test message", false);
 
         // when
         publisher.sendMessage(event, chatId);

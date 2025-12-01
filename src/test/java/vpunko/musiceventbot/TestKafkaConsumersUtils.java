@@ -39,7 +39,7 @@ public class TestKafkaConsumersUtils {
         ConsumerFactory<String, T> cf = new DefaultKafkaConsumerFactory<>(props);
         Consumer<String, T> consumer = cf.createConsumer();
 
-        embeddedKafka.consumeFromAnEmbeddedTopic(consumer, topic);
+        embeddedKafka.consumeFromAnEmbeddedTopic(consumer, true, topic);
 
         return consumer;
     }
