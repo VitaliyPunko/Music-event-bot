@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserMessageRequestEvent {
 
-    long chatId;
-    String message;
+    private long chatId;
+    private String message;
+    private boolean forTest;
 }

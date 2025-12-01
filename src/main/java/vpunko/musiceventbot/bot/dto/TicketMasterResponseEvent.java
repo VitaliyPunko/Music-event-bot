@@ -9,4 +9,5 @@ public class TicketMasterResponseEvent {
 
     private List<TicketmasterEvent> events;
     private long chatId;
+    private boolean forTest;
 }
