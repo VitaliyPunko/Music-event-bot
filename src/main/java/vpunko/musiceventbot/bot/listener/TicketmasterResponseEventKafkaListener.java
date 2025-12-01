@@ -22,8 +22,11 @@ public class TicketmasterResponseEventKafkaListener {
     @KafkaListener(topics = "${spring.kafka.in.ticket-master-response-event.topic}")
     @Counted(value = TICKET_MASTER_RESPONSE_EVENT_LISTENER_COUNTER)
     void listener(@Payload TicketMasterResponseEvent data) {
+        if (data.isForTest()) {
+            log.info("Received message from ticket-master-response-topic for test purpose");
+            return;
+        }
         log.info("Received message [{}] from ticket-master-response-topic }", data);
-
         SendMessage message = new SendMessage();
         message.setChatId(data.getChatId());
         musicEventBot.handleKafkaArtistNameInput(message, data.getChatId(), data.getEvents());

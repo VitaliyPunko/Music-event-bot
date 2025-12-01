@@ -30,7 +30,7 @@ public class MusicEventCoreHandler {
 
     public void sendArtistName(String artist, long chatId) {
         log.info("Sending artist name to music-core: {}", artist);
-        publisher.sendMessage(new UserMessageRequestEvent(chatId, artist), chatId);
+        publisher.sendMessage(new UserMessageRequestEvent(chatId, artist, false), chatId);
     }
 
 

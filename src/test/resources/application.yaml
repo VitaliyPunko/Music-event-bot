@@ -17,14 +17,15 @@ spring:
   kafka:
     out:
       music-core-event:
-        topic: music-event-core-topic
+        topic: music-event-core-topic-test
         producer:
           bootstrap-servers: localhost:29092
           client-id: test-producer
     in:
       ticket-master-response-event:
-        topic: ticket-master-response-topic
+        topic: ticket-master-response-topic-test
         consumer:
+          auto-offset-reset: latest
           bootstrap-servers: localhost:29092
           group-id: test-group-id
 

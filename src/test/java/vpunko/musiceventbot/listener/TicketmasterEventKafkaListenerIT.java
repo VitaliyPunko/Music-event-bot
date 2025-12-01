@@ -32,7 +32,7 @@ import static org.mockito.Mockito.verify;
 @SpringBootTest
 @EmbeddedKafka(
         partitions = 1,
-        topics = "ticket-master-response-topic",
+        topics = "ticket-master-response-topic-test",
         brokerProperties = {
                 "listeners=PLAINTEXT://localhost:9092",
                 "port=9092"
@@ -43,7 +43,7 @@ import static org.mockito.Mockito.verify;
 })
 class TicketmasterEventKafkaListenerIT {
 
-    private static final String TOPIC = "ticket-master-response-topic";
+    private static final String TOPIC = "ticket-master-response-topic-test";
 
     @Autowired
     private KafkaTemplate<String, TicketMasterResponseEvent> kafkaTemplate;

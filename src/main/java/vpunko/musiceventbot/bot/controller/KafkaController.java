@@ -19,7 +19,7 @@ public class KafkaController {
     public String sendMessage(@PathVariable String message) {
         log.info("Sending message via KafkaController : {}", message);
         long chatId = 1L;
-        UserMessageRequestEvent user = new UserMessageRequestEvent(chatId, message);
+        UserMessageRequestEvent user = new UserMessageRequestEvent(chatId, message, true);
         userMessageRequestBotEventKafkaPublisher.sendMessage(user, chatId);
         return message;
     }
