@@ -2,7 +2,6 @@ package vpunko.musiceventbot.sheduler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import vpunko.musiceventbot.bot.dto.UserMessageRequestEvent;
 import vpunko.musiceventbot.bot.publisher.UserMessageRequestBotEventKafkaPublisher;
@@ -32,7 +31,7 @@ public class KafkaTestMessageScheduler {
     private final UserMessageRequestBotEventKafkaPublisher userMessageRequestBotEventKafkaPublisher;
 
     // runs every 30 seconds, for example
-    @Scheduled(fixedRateString = "30000")
+    // @Scheduled(fixedRateString = "30000")
     public void sendTestMessage() {
         long chatId = 1L;
         String artist = ARTISTS.get(random.nextInt(ARTISTS.size()));
